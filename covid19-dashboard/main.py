@@ -100,7 +100,7 @@ def get_data_for(covid, region, date):
         'cases': covid.get_timeseries_of_cumulative_cases(region=region).to_dict(),
         'deaths': covid.get_timeseries_of_cumulative_deaths(region=region).to_dict()
     }
-    
+
     print("Getting perDay Data")
     daily = {
         'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=1).to_dict(),
