@@ -100,12 +100,12 @@ class COVID19:
         county_dcids = {}
 
         for elem in response:
-            dcid = elem['dcid']
-            name = elem['place']
+            state_dcid = elem['dcid']
+            county_dcid = elem['place']
             try:
-                county_dcids[dcid].append(name)
+                county_dcids[state_dcid].append(county_dcid)
             except KeyError:
-                county_dcids[dcid] = [name]
+                county_dcids[state_dcid] = [county_dcid]
 
         self.data['county_dcid'] = self.data['state_dcid'].map(county_dcids)
         self.data = self.data.explode('county_dcid')
@@ -138,12 +138,19 @@ class COVID19:
         Kansas City counties are too.
         This function is in charge of adding those counties/cities to self.data"""
         self.data.loc['geoId/3651000', 'county_population'] = 8399000
+        self.data.loc['geoId/3651000', 'state_dcid'] = "geoId/36"
+        self.data.loc['geoId/3651000', 'state_name'] = "New York"
+        self.data.loc['geoId/3651000', 'county_name'] = 'NYC'
+
         self.data.loc['geoId/2938000', 'county_population'] = 491918
-        # self.request_city_population()
+        self.data.loc['geoId/2938000', 'state_dcid'] = "geoId/29"
+        self.data.loc['geoId/2938000', 'state_name'] = "Missouri"
+        self.data.loc['geoId/2938000', 'county_name'] = 'Kansas City'
 
     def get_covid_data(self, dcids: list, stats_var: str) -> pd.DataFrame:
         """Retrieves COVID19 data given a lsit of dcids and statistical variable"""
         data_holder = {}
+        dcids = [x for x in dcids if str(x) != 'nan']
         response = send_request("https://api.datacommons.org/bulk/stats",
                                 {"place": dcids, "stats_var": stats_var}, api_key=self.api_key)
 
@@ -435,12 +442,14 @@ class COVID19:
             state_dcid = self.data.loc[geoId]['state_dcid']
             county_dcid = geoId
             county_name = self.data.loc[county_dcid]['county_name']
+            print(county_name, geoId)
+            print(type(county_name))
             county_name = county_name.replace(" County", "") \
                 .replace(" Parish", "") \
                 .replace(" City", "") \
                 .replace(" Borough", "")
-            geoId_map[county_dcid] = county_name + ', ' + self.data.loc[county_dcid]['state_name']
-            geoId_map[state_dcid] = self.data.loc[county_dcid]['state_name']
+            geoId_map[county_dcid] = county_name + ', ' + str(self.data.loc[county_dcid]['state_name'])
+            geoId_map[state_dcid] = str(self.data.loc[county_dcid]['state_name'])
         return geoId_map
 
     def get_timeseries_of_cumulative_cases(self, days:int=60, region:str="state"):

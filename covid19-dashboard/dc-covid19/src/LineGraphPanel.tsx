@@ -34,7 +34,8 @@ type Props = {
     selectedDate: string,
     ISOSelectedDate: string
     selectedShowTopN: number,
-    typeOfData: string
+    typeOfData: string,
+    selectedLast: string
 }
 
 export default function LineGraphPanel(props: Props) {
@@ -46,9 +47,6 @@ export default function LineGraphPanel(props: Props) {
         let dataAsList: any = []
         if (!Object.keys(data).length) return dataAsList
 
-        console.log(props.ISOSelectedDate)
-        console.log(data)
-        console.log(data[props.ISOSelectedDate])
         let sortedGeoIds: { [key: string]: number} [] = []
 
         for (let geoId in data[props.ISOSelectedDate]){

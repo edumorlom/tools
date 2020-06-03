@@ -101,92 +101,69 @@ def get_data_for(covid, region, date):
         'deaths': covid.get_timeseries_of_cumulative_deaths(region=region).to_dict()
     }
 
-    print("Getting perDay Data")
     daily = {
-        'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=1).to_dict(),
-        'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=1).to_dict()
+        "absolute": {
+            'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=1).to_dict(),
+            'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=1).to_dict()
+        },
+        "perCapita": {
+            'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=1)).to_dict(),
+            'deaths': (covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=1)).to_dict()
+        },
+        "increase": {
+            'cases': (covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=1)).to_dict(),
+            'deaths': (covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=1)).to_dict()
+        }
     }
 
-    print("Getting dailyPerCapita Data")
-    dailyPerCapita = {
-        'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=1)).to_dict(),
-        'deaths': (covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=1)).to_dict()
-    }
-
-    print("Getting dailyIncrease Data")
-    dailyIncrease = {
-        'cases': (
-            covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=1)).to_dict(),
-        'deaths': (
-            covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=1)).to_dict()
-    }
-
-    print("Getting perWeek Data")
     weekly = {
-        'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=7).to_dict(),
-        'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=7).to_dict()
+        "absolute": {
+            'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=7).to_dict(),
+            'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=7).to_dict()
+        },
+        "perCapita": {
+            'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=7)).to_dict(),
+            'deaths': (covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=7)).to_dict()
+        },
+        "increase": {
+            'cases': (covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=7)).to_dict(),
+            'deaths': (covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=7)).to_dict()
+        }
     }
 
-    weeklyPerCapita = {
-        'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=7)).to_dict(),
-        'deaths': (covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=7)).to_dict()
-    }
-
-    print("Getting weekIncrease Data")
-    weeklyIncrease = {
-        'cases': (
-            covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=7)).to_dict(),
-        'deaths': (
-            covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=7)).to_dict()
-    }
-
-    print("Getting perMonth Data")
     monthly = {
-        'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=30).to_dict(),
-        'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=30).to_dict()
-    }
-    print("Getting monthlyPerCapita Data")
-    monthlyPerCapita = {
-        'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=30)).to_dict(),
-        'deaths': (
-            covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=30)).to_dict()
-    }
-
-    print("Getting weekIncrease Data")
-    monthlyIncrease = {
-        'cases': (covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date,
-                                                               time_delta=30)).to_dict(),
-        'deaths': (covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date,
-                                                                 time_delta=30)).to_dict()
+        "absolute": {
+            'cases': covid.get_cases_for_given_range_alone(region=region, most_recent_date=date, time_delta=30).to_dict(),
+            'deaths': covid.get_deaths_for_given_range_alone(region=region, most_recent_date=date, time_delta=30).to_dict()
+        },
+        "perCapita": {
+            'cases': (covid.get_cases_difference_per_capita(region=region, most_recent_date=date, time_delta=30)).to_dict(),
+            'deaths': (covid.get_deaths_difference_per_capita(region=region, most_recent_date=date, time_delta=30)).to_dict()
+        },
+        "increase": {
+            'cases': (covid.get_cases_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=30)).to_dict(),
+            'deaths': (covid.get_deaths_increase_pct_for_given_dates(region=region, most_recent_date=date, time_delta=30)).to_dict()
+        }
     }
 
-    print("Getting absoluteCumulative Data")
-    absoluteCumulative = {
-        'cases': covid.get_cumulative_cases_for_given_date(region=region, date=date).to_dict(),
-        'deaths': covid.get_cumulative_deaths_for_given_date(region=region, date=date).to_dict()
-    }
-
-    print("Getting cumulativePerCapita Data")
-    cumulativePerCapita = {
-        'cases': (covid.get_cumulative_cases_per_capita_for_given_date(region=region, date=date)).to_dict(),
-        'deaths': (covid.get_cumulative_deaths_per_capita_for_given_date(region=region, date=date)).to_dict()
+    cumulative = {
+        "absolute": {
+            'cases': covid.get_cumulative_cases_for_given_date(region=region, date=date).to_dict(),
+            'deaths': covid.get_cumulative_deaths_for_given_date(region=region, date=date).to_dict()
+        },
+        "perCapita": {
+            'cases': (covid.get_cumulative_cases_per_capita_for_given_date(region=region, date=date)).to_dict(),
+            'deaths': (covid.get_cumulative_deaths_per_capita_for_given_date(region=region, date=date)).to_dict()
+        }
     }
 
     return {
-        "cumulativeTimeSeries": cumulativeTimeSeries,
         "daily": daily,
-        "dailyPerCapita": dailyPerCapita,
-        "dailyIncrease": dailyIncrease,
         "weekly": weekly,
-        "weeklyPerCapita": weeklyPerCapita,
-        "weeklyIncrease": weeklyIncrease,
         "monthly": monthly,
-        "monthlyPerCapita": monthlyPerCapita,
-        "monthlyIncrease": monthlyIncrease,
-        "absoluteCumulative": absoluteCumulative,
-        "cumulativePerCapita": cumulativePerCapita
+        "cumulative": cumulative
     }
-
-
+#
+#
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+	app.run(host="0.0.0.0", port=80)

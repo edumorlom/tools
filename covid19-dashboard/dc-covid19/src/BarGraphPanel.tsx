@@ -34,7 +34,8 @@ type Props = {
     dcidMap: {},
     selectedDate: string,
     selectedShowTopN: number,
-    typeOfData: string
+    typeOfData: string,
+    selectedLast: string
 }
 
 export default function BarGraphPanel(props: Props) {
@@ -80,9 +81,10 @@ export default function BarGraphPanel(props: Props) {
     }
 
     // Data as it is received.
-    const preprocesedData: dataHolder = props.data?.[props.selectedDate]?.[props.region]?.[props.typeOfData]?.[props.label] || {}
+    const preprocesedData: dataHolder = props.data?.[props.selectedDate]?.[props.region]?.[props.selectedLast]?.[props.typeOfData]?.[props.label] || {}
     // Data as an array to be interpreted by chart.
     const data: dataHolder[] = jsonToArray(preprocesedData)
+
     return (
         <div className={"panel chart shadow"}>
             <h4 className={"title"}>{PanelInfo[props.typeOfData]?.title.replace("{TYPE}", props.label[0].toUpperCase() + props.label.slice(1, props.label.length))}</h4>

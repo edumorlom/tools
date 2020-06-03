@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import six.moves.urllib.error
 import six.moves.urllib.request
 import json

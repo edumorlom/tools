@@ -19,5 +19,5 @@ __pycache__/
 /setup.cfg
 
 # Ignored by developer
-node_modules
+dc-covid19/node_modules
 .DS_Store

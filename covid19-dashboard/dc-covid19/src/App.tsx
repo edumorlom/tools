@@ -14,80 +14,51 @@
  limitations under the License.
  */
 import React from 'react';
-import OptionPanel from './OptionPanel'
-import SideNav from "./SideNav";
-import Row from "./Row";
-import PanelInfo from './PanelInfo.json'
 import Configuration from './Configuration.json'
-import MapChart from "./MapChart";
+import Answer from "./Answer";
+import Questions from './Questions.json'
+// @ts-ignore
+import QuestionSelection from './QuestionSelection';
 
-type stateType = {
+type State = {
+    screen: string,
     allData: {}, // copy of all the unparsed data
+    selectedQuestion: string,
+    selectedLast: string,
     selectedRegion: string, // current region selected
     selectedShowTopN: number, // default number of top counties/states to show
     selectedDate: string, // current date selected, latest is always default
     availableRegions: {}, // region -> geoId
     availableDates: {}, // id -> ISOdate
     availableShowTopN: number[], // available numbers to view, example: Top 10, Top 20, Top 30
-    rows: JSX.Element[],
+    availableLast: {} // range example: last day, last 2 weeks, last month
     dcidMap: {}, // converts geoId to the region's name
-    animationClassName: string // will be passed down as a prop to anything requiring an animation
 }
 
-class App extends React.Component <{}, stateType> {
+class App extends React.Component <{}, State> {
     constructor(props: {}) {
         super(props);
-        // Create the references for quick sidenav onClick
-        this.refs_ = this.generateRefs()
-        // On-load fadein animation.
-        this.fadeInAnimation()
         // Request latest data from server.
         this.sendRequest().then(r => console.log("Data has been loaded!"))
+        window.addEventListener('popstate', (event) => {
+            this.setState({screen: "questionSelection"})
+        });
+        window.history.pushState({name: "browserBack"}, "on browser back click", window.location.href);
     }
 
     state = {
+        screen: "questionSelection",
         allData: {},
+        selectedLast: Configuration.DEFAULT_LAST,
+        selectedQuestion: Configuration.DEFAULT_QUESTION,
         selectedRegion: Configuration.DEFAULT_REGION,
         selectedShowTopN: Configuration.DEFAULT_SHOWTOPN,
         selectedDate: Configuration.DEFAULT_DATE,
         availableRegions: Configuration.REGIONS,
         availableDates: Configuration.DATES,
         availableShowTopN: Configuration.SHOWTOPN,
-        rows: [],
+        availableLast: Configuration.LAST,
         dcidMap: {},
-        animationClassName: "fadeInAnimation"
-    }
-
-    refs_: any = {}
-
-    generateRefs = () => {
-        const refs_ = {}
-        Object.keys(PanelInfo).forEach(key => refs_[key] = React.createRef<HTMLDivElement>())
-        return refs_
-    }
-
-    /**
-     * Sets the fadeInAnimation.
-     */
-    fadeInAnimation = () => {
-        this.setState({animationClassName: "fadeInAnimation"})
-        window.setTimeout(() => {
-            this.setState({animationClassName: ""})
-        }, 1000)
-    }
-
-    /**
-     * In charge of scrolling to a specific reference in the page.
-     * @param event
-     */
-    handleScrollOnRef = (event) => {
-        const ref_ = this.refs_[event.target.id]
-        if (ref_.current) {
-            ref_.current.scrollIntoView({
-                behavior: "smooth",
-                block: "nearest"
-            })
-        }
     }
 
     /**
@@ -103,8 +74,14 @@ class App extends React.Component <{}, stateType> {
             case 'selectedDate':
                 this.setState({selectedDate: value})
                 break;
+            case 'selectedQuestion':
+                this.setState({selectedQuestion: value})
+                break;
             case 'selectedShowTopN':
                 this.setState({selectedShowTopN: value})
+                break;
+            case 'selectedLast':
+                this.setState({selectedLast: value})
                 break;
         }
     }
@@ -118,45 +95,53 @@ class App extends React.Component <{}, stateType> {
         const url: string = `${host}/get-all-data`
         await fetch(url, {mode: 'cors'}).then(response => response.json().then(res => {
             this.setState({availableDates: res['availableDates']})
-            this.setState({availableRegions: {...this.state.availableRegions,...res['availableRegions']}})
+            this.setState({availableRegions: {...this.state.availableRegions, ...res['availableRegions']}})
             this.setState({dcidMap: res['dcidMap']})
             this.setState({allData: res})
         }))
     }
-    
-    render() {
-        const rows = Object.keys(PanelInfo)
-            .map(dataId => <Row data={this.state.allData}
-                                typeOfData={dataId}
-                                selectedDate={this.state.selectedDate}
-                                ISOSelectedDate={this.state.availableDates[this.state.selectedDate]}
-                                region={this.state.selectedRegion}
-                                ref_={this.refs_[dataId]}
-                                dcidMap={this.state.dcidMap}
-                                selectedShowTopN={this.state.selectedShowTopN}
-                                animationClassName={this.state.animationClassName}/>)
 
+    getAnswer = () => {
+        this.setState({screen: "answer"})
+    }
+
+    getTitle = () => {
+        return  <h1 className={"main-title"}>
+                    {Configuration.TITLE + ' '}
+                    <span style={{color: "#990001"}}>{Configuration.SUBTITLE}</span>
+                </h1>
+    }
+
+    getContent = () => {
+        if (this.state.screen === "questionSelection") {
+            return <QuestionSelection handleSelectUpdate={this.handleSelectUpdate}
+                                      availableRegions={this.state.availableRegions}
+                                      availableDates={this.state.availableDates}
+                                      availableLast={this.state.availableLast}
+                                      onSubmit={this.getAnswer}/>
+        } else {
+            return <Answer charts={Questions[this.state.selectedQuestion].charts}
+                           allData={this.state.allData}
+                           selectedRegion={this.state.selectedRegion}
+                           selectedDate={this.state.selectedDate}
+                           selectedLast={this.state.selectedLast}
+                           ISOSelectedDate={this.state.availableDates[this.state.selectedDate]}
+                           region={this.state.selectedRegion}
+                           dcidMap={this.state.dcidMap}
+                           selectedShowTopN={this.state.selectedShowTopN}/>
+        }
+    }
+    
+    render = () => {
         return (
-            <div className={"container " + this.state.animationClassName}>
-                <SideNav handleScrollOnRef={this.handleScrollOnRef}/>
-                <div className={"main-content"}>
-                    <h1 className={"main-title"}>
-                        {Configuration.TITLE + ' '}
-                        <span style={{color: "#990001"}}>{Configuration.SUBTITLE}</span>
-                    </h1>
-                    <OptionPanel handleSelectUpdate={this.handleSelectUpdate}
-                                 availableShowTopN={this.state.availableShowTopN}
-                                 availableDates={this.state.availableDates}
-                                 availableRegions={this.state.availableRegions}
-                                 defaultShowTopN={this.state.selectedShowTopN}
-                                 defaultDate={this.state.selectedDate}
-                                 defaultRegion={this.state.selectedRegion}/>
-                        {rows}
-                </div>
-                <h5 className={"footer"}>{Configuration.FOOTER}</h5>
-            </div>
+            <>
+              {this.getTitle()}
+              {this.getContent()}
+            </>
         )
     }
+
+
 }
 
 export default App;

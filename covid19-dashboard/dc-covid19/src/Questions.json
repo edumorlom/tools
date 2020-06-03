@@ -1,0 +1,18 @@
+{
+  "absolute": {
+    "text": "the most cases/deaths",
+    "charts": ["absolute"]
+  },
+  "perCapita": {
+    "text": "the most cases/deaths per capita",
+    "charts": ["perCapita"]
+  },
+  "percent": {
+    "text": "seen the most increase",
+    "charts": ["increase"]
+  },
+  "comingSoon": {
+    "text": "more question coming soon!",
+    "charts": ["increase"]
+  }
+}

@@ -28,7 +28,8 @@ type Props = {
     selectedDate: string,
     ISOSelectedDate: string,
     selectedShowTopN: number,
-    typeOfData: string
+    typeOfData: string,
+    selectedLast: string
 }
 
 export default function Panel(props: Props) {
@@ -43,6 +44,7 @@ export default function Panel(props: Props) {
         return <BarGraphPanel dcidMap={props.dcidMap}
                               data={props.data}
                               selectedDate={props.selectedDate}
+                              selectedLast={props.selectedLast}
                               label={props.label}
                               region={props.region}
                               selectedShowTopN={props.selectedShowTopN}
@@ -51,12 +53,13 @@ export default function Panel(props: Props) {
         return <LineGraphPanel dcidMap={props.dcidMap}
                                data={props.data}
                                selectedDate={props.selectedDate}
+                               selectedLast={props.selectedLast}
                                ISOSelectedDate={props.ISOSelectedDate}
                                label={props.label}
                                region={props.region}
                                selectedShowTopN={props.selectedShowTopN}
                                typeOfData={props.typeOfData}/>
     } else {
-        return <div/>
+        return (<EmptyPanel reason={Object.keys(props.data).length === 0 ? 'loading' : 'nan'}/>)
     }
 }

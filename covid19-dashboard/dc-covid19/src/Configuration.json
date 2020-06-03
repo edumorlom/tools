@@ -1,7 +1,22 @@
 {
-  "REGIONS": {"state":  "All States", "county":  "All Counties"},
+  "REGIONS": {
+    "USA": "the USA"
+  },
   "DEFAULT_REGION": "state",
-  "SHOWTOPN": [5, 10, 20, 30, 40, 50],
+  "SHOWTOPN": [
+    5,
+    10,
+    20,
+    30,
+    40,
+    50
+  ],
+  "LAST": {
+    "daily": "day",
+    "weekly": "week",
+    "monthly": "month"
+  },
+  "DEFAULT_LAST": "daily",
   "DEFAULT_SHOWTOPN": 10,
   "DATES": {
     "latest": "Latest",
@@ -9,8 +24,9 @@
     "fourteenDays": "2 Weeks Ago",
     "thirtyDays": "1 Month Ago"
   },
+  "DEFAULT_QUESTION": "perCapita",
   "DEFAULT_DATE": "latest",
   "TITLE": "Data Commons",
   "SUBTITLE": "COVID-19",
-  "FOOTER": "Data from The New York Times, based on reports from state and local health agencies.\n"
+  "FOOTER": "Data from The New York Times, based on reports from state and local health agencies."
 }
