@@ -33,6 +33,10 @@ Compress(app)
 
 app.config.from_mapping(config)
 
+from flask_cors import CORS
+
+CORS(app)
+
 # Load the configuration file from the instance folder.
 app.config.from_pyfile("config.py")
 cache = Cache(app)
