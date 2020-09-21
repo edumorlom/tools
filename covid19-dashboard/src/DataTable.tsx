@@ -49,13 +49,13 @@ type TablePropsType = {
 export default class DataTable extends React.Component<
   TablePropsType, TableStateType> {
   state = {
-    sortBy: Configuration.tableDefaultSortBy,
+    sortBy: Configuration.defaultKey,
     order: 'desc' as OrientationType,
     chunkIndex: 0,
     categories: Content.table
   };
 
-  chunkSize = 30;
+  chunkSize = 25;
   chunkedData: Place[][] = [];
 
   componentDidMount() {

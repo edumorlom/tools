@@ -26,8 +26,7 @@ const history = createBrowserHistory()
 ReactDOM.render(
   <React.StrictMode>
     <Router history={history}>
-      <Route path={"/:geoId"} component={dashboard}/>
-      <Route exact path={"/"} component={dashboard}/>
+      <Route path={"/"} component={dashboard}/>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

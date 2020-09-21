@@ -17,7 +17,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from typing import List, Dict, Union
 
-from flask import Flask, send_from_directory, Response
+from flask import Flask, Response, redirect
 from flask_caching import Cache
 from flask_compress import Compress
 
@@ -50,7 +50,6 @@ GeoIdToDataType = Dict[str, KeyToTimeSeries]
 GeoIdToStatsType = Dict[str, Dict[str, int]]
 PlaceToInfoType = Dict[str, Dict[str, str]]
 
-@app.route("/<path:path>", methods=["GET"])
 def static_proxy(path):
     """
     Return the /path file in the directory from the ./build directory.
@@ -81,7 +80,6 @@ def index():
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
-
 
 @app.route("/api/data/<string:geo_id>")
 @cache.cached(timeout=3600)

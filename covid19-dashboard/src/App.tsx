@@ -270,7 +270,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
     // Get the latest date for all places.
     const dates = places
       .map(place => {
-        const keyToTimeSeries = place.keyToTimeSeries[Config.tableDefaultSortBy] || {};
+        const keyToTimeSeries = place.keyToTimeSeries[Config.defaultKey] || {};
         // Config.defaultKey contains our reference key for dates.
         // AKA, what is our most complete dataset? We want to get the date
         // from that dataset.
