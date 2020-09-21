@@ -50,7 +50,6 @@ GeoIdToDataType = Dict[str, KeyToTimeSeries]
 GeoIdToStatsType = Dict[str, Dict[str, int]]
 PlaceToInfoType = Dict[str, Dict[str, str]]
 
-
 @app.route("/<path:path>", methods=["GET"])
 def static_proxy(path):
     """
@@ -90,7 +89,7 @@ def county_data(geo_id: str):
     """
     Returns any placeType's datta.
     NOTE: for return type documentation, please see README.md's APIs section.
-    :return: geo_id->{**key_to_timeserie}.
+    :return: geo_id->{**key_to_timeseries}.
     """
     # Request data for only US Counties.
     data = _get_data(geo_id)

@@ -26,14 +26,14 @@ export const numberWithCommas = (num: number): string => {
 };
 
 /**
- * Gets the latest date in the for a a list of Iso-dates.
+ * Gets the latest date in a list of ISO dates.
  * @param: dates: a list of dates in ISO format. Example: "2020-01-02".
  */
 export const getLatestDate = (dates: string[]): string => {
   if (!dates.length) return '';
 
   return dates.reduce((a, b) => {
-    return new Date(a) > new Date(b) ? a : b;
+      return new Date(a) > new Date(b) ? a : b;
   });
 };
 
