@@ -134,7 +134,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
     });
 
     // We don't really care about this data, we only wanted to cache it.
-    // None the less, we still store it because
+    // Nonetheless, we still store it because
     // it can help when using the search bar.
     Promise.all(cachePromises).then(responses => {
       responses.forEach(response => {
@@ -299,7 +299,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
 
     // If placeName is "" or undefined, don't display a subtitle.
     // It means hasn't finished loading.
-    if (selectedPlace?.name) {
+    if (selectedPlace?.name && this.placeTypeToShow in pluralPlaceTypes) {
       const pluralPlaceType = pluralPlaceTypes[this.placeTypeToShow];
       // "Counties in Florida", "Countries in World"...
       subtitle = pluralPlaceType + ' in ' + selectedPlace.name;
