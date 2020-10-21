@@ -157,16 +157,12 @@ export default class DataTable extends React.Component<
       }
     })
 
-    // Filter out any values that are nullish.
-    const filteredData = sortedData.filter(place => {
-      return place.keyToTimeSeries[this.state.sortBy];
-    })
 
 
     // Chunk the dataset by groups of this.chunkSize.
     // Each element in the chunk represents a row.
     // Each chunk contains this.chunkSize rows.
-    this.chunkedData = chunk(filteredData, this.chunkSize);
+    this.chunkedData = chunk(sortedData, this.chunkSize);
 
     // Depending on what page of the table the user is on, display that chunk.
     // Example: If the user is on page 1, display this.chunkedData[0].
@@ -206,6 +202,9 @@ export default class DataTable extends React.Component<
       });
 
       const subregionType = place.getSubregionType()
+      console.log(subregionType)
+      const isClickable = this.props.configuration['placeTypes'].indexOf(subregionType) !== -1
+      console.log(this.props.configuration['placeTypes'])
 
       // Place's name in the form of "subregion, region".
       // Example: Miami, Florida.
@@ -216,8 +215,8 @@ export default class DataTable extends React.Component<
 
       return (
         <tbody key={index}>
-          <tr className={subregionType ? 'clickable' : ''}
-              {...(subregionType in this.props.configuration['placeTypes'] && {
+          <tr className={isClickable ? 'clickable' : ''}
+              {...(isClickable && {
                 onClick: () => this.props.goToPlace(place.geoId, subregionType)})}>
             <th>{tableRanking}</th>
             <th>{placeFullName}</th>
@@ -354,9 +353,9 @@ const TableOptions = (props: TableOptionsPropsType) => {
         setShowOptionsClass(showOptionsClass ? "" : "show")}
       }>
         <img src={require("./options_icon_18dp.png")}
-             alt="Options"
+             alt={"Statistical Variables"}
              className={"icon-in-button"}/>
-        {"Statistical Variables"}
+        {showOptionsClass ? "Close" : "Statistical Variables"}
       </label>
       <div className={`dropdown-menu shadow ${showOptionsClass}`}
            style={{width: 300, marginTop: -10, marginLeft: -1}}>

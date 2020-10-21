@@ -27,6 +27,9 @@ import debounce from 'lodash/debounce';
 import Breadcrumb from 'react-bootstrap/cjs/Breadcrumb';
 import Place from './Place';
 import dayjs from 'dayjs';
+import LogRocket from 'logrocket';
+
+LogRocket.init('t8h61y/dc')
 
 type AppPropsType = {
   location: any;
@@ -361,7 +364,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
         />
         <div className={'site-container fadeIn'}>
           <div className={'header'}>
-            <h6>{formattedDate}</h6>
+            <h6>{"Latest data from " + formattedDate}</h6>
             {
               // Only display the breadcrumb if not in World view.
               this.geoId !== 'World' && (

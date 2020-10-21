@@ -14,12 +14,12 @@
   },
   "content": {
     "cumulativePanel": [{
-      "title": "Total Above Poverty",
+      "title": "Currrently Above Poverty",
       "dataKey": "cumulativeAbovePovertyInLast12Months",
       "color": "--dc-red-strong"
     },
       {
-        "title": "Total Below Poverty",
+        "title": "Currently Below Poverty",
         "dataKey": "cumulativeBelowPovertyInLast12Months",
         "color": "grey"
       },
@@ -29,12 +29,12 @@
         "color": "navy"
       },
       {
-        "title": "Total Reported Crimes",
+        "title": "Newly Reported Crimes",
         "dataKey": "cumulativeCrime",
         "color": "black"
       },
       {
-        "title": "Total GDP",
+        "title": "Gross Domestic Product",
         "dataKey": "cumulativeGDP",
         "color": "black"
       }
