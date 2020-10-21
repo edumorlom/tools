@@ -16,25 +16,27 @@
 
 import React, {useState} from 'react';
 import chunk from 'lodash/chunk';
-import Content from './Content.json';
-import Configuration from './Config.json';
 import Place from "./Place";
 import Th from './Th';
 import MultiButtonGroup from "./MultiButtonGroup";
-import {getLatestDate, goToPlace} from "./Utils";
+import {getLatestDate} from "./Utils";
 import Table from 'react-bootstrap/Table';
 
+type CategoryType = {title: string,id: string, typeOf: string, color: string, graphSubtitle: string, enabled: boolean}
 type OrientationType = 'desc' | 'asc';
 
 type TableStateType = {
   sortBy: string;
   order: OrientationType;
   chunkIndex: number;
-  categories: any[]
+  categories: CategoryType[];
 };
 
 type TablePropsType = {
+  goToPlace: (geoId?: string, placeType?: string) => void;
   data: Place[];
+  configuration: any;
+  content: any;
 };
 
 /**
@@ -49,10 +51,10 @@ type TablePropsType = {
 export default class DataTable extends React.Component<
   TablePropsType, TableStateType> {
   state = {
-    sortBy: Configuration.tableDefaultSortBy,
+    sortBy: this.props.configuration.tableDefaultSortBy as string,
     order: 'desc' as OrientationType,
-    chunkIndex: 0,
-    categories: Content.table
+    chunkIndex: 0 as number,
+    categories: this.props.content.table as CategoryType[]
   };
 
   chunkSize = 30;
@@ -170,7 +172,7 @@ export default class DataTable extends React.Component<
     // Example: If the user is on page 1, display this.chunkedData[0].
     const chunkDataShown = this.chunkedData?.[this.state.chunkIndex] || [];
 
-    // Get the header names from Content.json
+    // Get the header names from Content.
     // When the header is clicked, change the sorting.
     const enabledHeaders = this.state.categories.filter(header => header.enabled)
 
@@ -216,7 +218,7 @@ export default class DataTable extends React.Component<
         <tbody key={index}>
           <tr className={subregionType ? 'clickable' : ''}
               {...(subregionType && {
-                onClick: () => goToPlace(place.geoId, subregionType)})}>
+                onClick: () => this.props.goToPlace(place.geoId, subregionType)})}>
             <th>{tableRanking}</th>
             <th>{placeFullName}</th>
             {thValues}
@@ -347,14 +349,14 @@ const TableOptions = (props: TableOptionsPropsType) => {
 
   return (
     <div className="btn-group-vertical">
-      <label className={"btn btn-secondary"} onClick={() => {
+      <label className={"btn btn-secondary options"} onClick={() => {
         // Logic for displaying options panel.
         setShowOptionsClass(showOptionsClass ? "" : "show")}
       }>
         <img src={require("./options_icon_18dp.png")}
              alt="Options"
              className={"icon-in-button"}/>
-        {"Options"}
+        {"Statistical Variables"}
       </label>
       <div className={`dropdown-menu shadow ${showOptionsClass}`}
            style={{width: 300, marginTop: -10, marginLeft: -1}}>

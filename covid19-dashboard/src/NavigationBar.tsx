@@ -40,13 +40,10 @@ export default (props: HeaderPropsType) => (
           </a>
           <span> {props.subtitle}</span>
         </div>
-        <button className="navbar-toggler"
-                type="button"
-                data-toggle="collapse"
-                data-target="#dc-main-nav">
-        </button>
         <form className="form-inline">
-          <input className="form-control mr-sm"
+          <a className="nav-link" href={"/dashboard?dashboardId=covid19"}>COVID-19</a>
+          <a className="nav-link" href={"/dashboard?dashboardId=poverty"}>Social Wellness</a>
+          <input className="form-control mr-sm ml-4"
                  type="text"
                  onKeyDown={
                    // Prevents re-load of page when on-enter.
