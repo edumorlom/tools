@@ -30,10 +30,6 @@ config = dict(DEBUG=True, CACHE_TYPE="filesystem", CACHE_DIR="/tmp")
 
 app = Flask(__name__, static_folder="./build")
 
-from flask_cors import CORS
-CORS(app)
-
-
 # All API responses are g-zipped/compressed.
 Compress(app)
 

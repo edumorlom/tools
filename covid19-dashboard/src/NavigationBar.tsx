@@ -35,14 +35,14 @@ export default (props: HeaderPropsType) => (
          id="main-nav">
       <div className="container-fluid">
         <div className="navbar-brand">
-          <a href={"https://datacommons.org"}>
+          <a href={"https://datacommons.org/"}>
             {props.title}
           </a>
           <span> {props.subtitle}</span>
         </div>
         <form className="form-inline">
-          <a className="nav-link" href={"/dashboard?dashboardId=covid19"}>COVID-19</a>
-          <a className="nav-link" href={"/dashboard?dashboardId=poverty"}>Social Wellness</a>
+          <a className="nav-link" href={"/dashboard/?dashboardId=covid19"}>COVID-19</a>
+          <a className="nav-link" href={"/dashboard/?dashboardId=poverty"}>Social Wellness</a>
           <input className="form-control mr-sm ml-4"
                  type="text"
                  onKeyDown={

@@ -92,7 +92,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
       'places',
     ];
 
-    const promises = apis.map(api => fetch(`http://localhost/api/${api}`));
+    const promises = apis.map(api => fetch(`/api/${api}`));
 
     Promise.all(promises).then(([dataResponse, placeInfoResponse]) => {
       // Get the stat_var data as a dictionary: geoId->stat_var->date->value.
@@ -136,7 +136,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
     cacheApis.splice(cacheApis.indexOf(this.placeTypeToShow), 1);
 
     const cachePromises = cacheApis.map(api => {
-      return fetch(`http://localhost/api/data/${api}?dashboardId=${this.dashboardId}`);
+      return fetch(`/api/data/${api}?dashboardId=${this.dashboardId}`);
     });
 
     // We don't really care about this data, we only wanted to cache it.

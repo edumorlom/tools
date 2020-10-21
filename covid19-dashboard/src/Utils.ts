@@ -55,7 +55,7 @@ export const Colors = (color: string): string => {
  * would display all counties in the USA.
  */
 export const goToPlace = (dashboardId: string, geoId?: string, placeType?: string): void => {
-  let newUrl = `/dashboard?dashboardId=${dashboardId}`;
+  let newUrl = `/dashboard/?dashboardId=${dashboardId}`;
 
   // Redirect to a specific geoId.
   if (geoId && geoId !== 'World') {

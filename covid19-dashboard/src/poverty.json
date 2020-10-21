@@ -1,7 +1,7 @@
 {
   "configuration": {
     "subtitle": "Social Wellness Dashboard",
-    "footer": "Data from U.S. Census",
+    "footer": "Data from U.S. Census & Europa.eu",
     "placeTypes": ["Country", "State"],
     "subregionSelectionButton": [
     ],
