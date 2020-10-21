@@ -130,7 +130,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
    * This is done for speed.
    */
   cacheData = (): void => {
-    const cacheApis: string[] = this.Configuration.placeTypes;
+    const cacheApis: string[] = [...this.Configuration.placeTypes];
     // Delete this.placeTypeToShow from the array since
     // since it is already being requested by fetch data.
     cacheApis.splice(cacheApis.indexOf(this.placeTypeToShow), 1);
