@@ -58,7 +58,7 @@ covid19 = {
     },
 }
 
-poverty = {
+socialWellness = {
     "Country": {
         "AbovePovertyInLast12Months":
             "Count_Person_AbovePovertyLevelInThePast12Months",

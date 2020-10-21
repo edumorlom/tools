@@ -42,7 +42,7 @@ export default (props: HeaderPropsType) => (
         </div>
         <form className="form-inline">
           <a className="nav-link" href={"/dashboard/?dashboardId=covid19"}>COVID-19</a>
-          <a className="nav-link" href={"/dashboard/?dashboardId=poverty"}>Social Wellness</a>
+          <a className="nav-link" href={"/dashboard/?dashboardId=socialWellness"}>Social Wellness</a>
           <input className="form-control mr-sm ml-4"
                  type="text"
                  onKeyDown={

@@ -35,7 +35,7 @@ def covid19():
 
 @app.route("/socialWellness")
 def socialWellness():
-    return redirect('https://datcom-website.uc.r.appspot.com/dashboard/?dashboardId=poverty')
+    return redirect('https://datcom-website.uc.r.appspot.com/dashboard/?dashboardId=socialWellness')
 
 
 if __name__ == "__main__":

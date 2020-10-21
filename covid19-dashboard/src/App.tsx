@@ -87,7 +87,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
     // Contains the data for placeTypeToShow
     const apis = [
       // contains data
-      `data/${this.placeTypeToShow}?dashboardId=${this.dashboardId}`,
+      `data/${this.placeTypeToShow}/${this.dashboardId}`,
       // contains place information
       'places',
     ];
@@ -136,7 +136,7 @@ class App extends React.Component<AppPropsType, AppStateType> {
     cacheApis.splice(cacheApis.indexOf(this.placeTypeToShow), 1);
 
     const cachePromises = cacheApis.map(api => {
-      return fetch(`/api/data/${api}?dashboardId=${this.dashboardId}`);
+      return fetch(`/api/data/${api}/${this.dashboardId}`);
     });
 
     // We don't really care about this data, we only wanted to cache it.

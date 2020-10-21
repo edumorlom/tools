@@ -24,7 +24,7 @@ from flask import request
 
 from send_request import send_request
 from calculate_data import calculate_data
-from Configuration import covid19, poverty
+from Configuration import covid19, socialWellness
 
 config = dict(DEBUG=True, CACHE_TYPE="filesystem", CACHE_DIR="/tmp")
 
@@ -47,25 +47,26 @@ GeoIdToStatsType = Dict[str, Dict[str, int]]
 PlaceToInfoType = Dict[str, Dict[str, str]]
 
 
-@app.route("/api/data/<string:geo_id>")
+@app.route("/api/data/<string:geo_id>/<string:dashboard_id>")
 @cache.cached(timeout=3600)
-def data(geo_id: str):
+def data(geo_id: str, dashboard_id: str):
     """
     Returns any placeType's data.
     NOTE: for return type documentation, please see README.md's APIs section.
     :return: geo_id->{**key_to_timeseries}.
     """
-    dashboard_id = request.args.get('dashboardId') or "covid19"
+    dashboard_id = dashboard_id or "covid19"
+    print(dashboard_id)
 
     # How many days should we perform the moving average for?
     # 0 == None
-    moving_averages_chunks = {"covid19": 7, "poverty": 0}
+    moving_averages_chunks = {"covid19": 7, "socialWellness": 0}
     moving_average_chunk = moving_averages_chunks[dashboard_id]
 
 
     # How many days should we skip to reduce response size?
     # In days, 1 == None.
-    clean_step_sizes = {"covid19": 6, "poverty": 1}
+    clean_step_sizes = {"covid19": 6, "socialWellness": 1}
     clean_step_size = clean_step_sizes[dashboard_id]
 
     # Get the stat vars for the given dashboardId.
@@ -461,8 +462,8 @@ def _add_browser_cache_headers_to_response(data: Dict,
 
 
 def _get_stat_vars(dashboard_id: str):
-    if dashboard_id == 'poverty':
-        return poverty
+    if dashboard_id == 'socialWellness':
+        return socialWellness
     else:
         return covid19
 
