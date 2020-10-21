@@ -217,7 +217,7 @@ export default class DataTable extends React.Component<
       return (
         <tbody key={index}>
           <tr className={subregionType ? 'clickable' : ''}
-              {...(subregionType && {
+              {...(subregionType in this.props.configuration['placeTypes'] && {
                 onClick: () => this.props.goToPlace(place.geoId, subregionType)})}>
             <th>{tableRanking}</th>
             <th>{placeFullName}</th>

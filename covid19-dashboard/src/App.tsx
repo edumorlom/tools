@@ -206,7 +206,8 @@ class App extends React.Component<AppPropsType, AppStateType> {
     const selectedPlace = this.places[this.geoId];
 
     // Convert the object of geoId->Place to a list of Places.
-    const places: Place[] = Object.values(this.places).filter(place => {
+    const places: Place[] = Object.values(this.places)
+      .filter(place => {
       return place.keyToTimeSeries;
     });
 
